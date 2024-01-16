@@ -1,0 +1,1 @@
+# Deneyap-Deprem-Sensoru
