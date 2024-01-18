@@ -1,13 +1,20 @@
+/*
+ * - Deneyap Kart V1 üzerinde dahili olarak bulunan IMU kullanılarak orta hassasiyette gelen titreşim verileri degerlendirilip, 
+ *   default olarak 0.5 girilen titreşim verisine göre telegram aracılıgıyla verilen chat idye uyarı mesajı göndermektedir.
+ * - Auth: noumanimpra & pxsty
+ */
+
 #include <WiFi.h>
 #include <UniversalTelegramBot.h>
 #include "lsm6dsm.h"
 #include "WiFiClientSecure.h"
 #include "time.h"
 
-#define WIFI_SSID "is that a supraaaa"
-#define WIFI_PASS "numan001"
-#define BOT_TOKEN "6903697379:AAE0UvntPAhOnq9GdXUnea-jEK1GE-fMPj0"
-#define TELEGRAM_CHATID "5099173759"
+#define WIFI_SSID "WIFI_NAME"
+#define WIFI_PASS "WIFI_PASS"
+#define BOT_TOKEN "BOT_TOKEN"
+#define TELEGRAM_CHATID "CHAT_ID"
+#define DEVICE_ID 1
 
 const char *ntpServer = "pool.ntp.org";
 const long gmtOffset_sec = 0;
@@ -52,7 +59,7 @@ void loop()
   }
   if ((nowGyroX - lastGyroX) >= sensibility)
   {
-    bot.sendMessage(TELEGRAM_CHATID, "Sensör [2]  titreşim :[" + String((nowGyroX - lastGyroX)) + "]");
+    bot.sendMessage(TELEGRAM_CHATID, "Sensör ["+ String(DEVICE_ID) +"]  \n titreşim :[" + String((nowGyroX - lastGyroX)) + "]");
     bot.getUpdates(bot.last_message_received + 1);
     delay(500);
   }
